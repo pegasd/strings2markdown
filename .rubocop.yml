@@ -1,5 +1,12 @@
+---
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
-Style/FrozenStringLiteralComment:
-  Enabled: false
+# Metrics
+Metrics/LineLength:
+  Description: People have wide screens, use them.
+  Max: 140
+Metrics/AbcSize:
+  Max: 20
+Metrics/MethodLength:
+  Max: 20
