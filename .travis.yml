@@ -1,4 +1,16 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.4.1
+  - 2.3.5
+  - 2.4.2
+
+script: bundle exec rake $RAKE_TASK
+
+jobs:
+  include:
+    - stage: RuboCop
+      env:
+        - RAKE_TASK=rubocop
+    - stage: Spec Tests
+      env:
+        - RAKE_TASK=spec
