@@ -4,4 +4,12 @@
 require 'bundler/setup'
 require 'strings2markdown'
 
-STDOUT.puts Strings2markdown.parse_module(module_path: File.expand_path('../../spec/fixtures/test_module', __FILE__)).to_yaml
+def deep_symbol_to_string(whatever)
+  # Yeah, this is pretty hackish, I know
+  require 'json'
+  JSON.parse whatever.to_json
+end
+
+test_module_dir = File.expand_path('../../spec/fixtures/test_module', __FILE__)
+module_hash     = Strings2markdown.parse_module(module_path: test_module_dir)
+puts deep_symbol_to_string(module_hash).to_yaml
