@@ -31,7 +31,7 @@ RSpec.describe Strings2markdown do
       defined_types:    [],
       resource_types:   [],
       providers:        [],
-      puppet_functions: []
+      puppet_functions: [],
     )
   end
 end

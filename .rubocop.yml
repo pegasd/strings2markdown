@@ -2,6 +2,11 @@
 AllCops:
   TargetRubyVersion: 2.4
 
+# Style
+Style/TrailingCommaInArguments:
+  Description: We're not living in JSON world anymore.
+  EnforcedStyleForMultiline: consistent_comma
+
 # Metrics
 Metrics/LineLength:
   Description: People have wide screens, use them.
