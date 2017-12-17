@@ -1,17 +1,24 @@
 ---
 AllCops:
   TargetRubyVersion: 2.4
+  Exclude:
+    - spec/fixtures/**/*.rb
 
 # Style
 Style/TrailingCommaInArguments:
   Description: We're not living in JSON world anymore.
   EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInLiteral:
+  Description: We're not living in JSON world anymore.
+  EnforcedStyleForMultiline: consistent_comma
 
 # Metrics
+Metrics/AbcSize:
+  Max: 30
+Metrics/BlockLength:
+  Max: 100
 Metrics/LineLength:
   Description: People have wide screens, use them.
   Max: 140
-Metrics/AbcSize:
-  Max: 20
 Metrics/MethodLength:
   Max: 20
