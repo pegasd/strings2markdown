@@ -45,4 +45,4 @@ The gem is available as open source under the terms of the [MIT License](http://
 ## Code of Conduct
 
 Everyone interacting in the Strings2markdown project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the
-[code of conduct](https://github.com/[USERNAME]/strings2markdown/blob/master/CODE_OF_CONDUCT.md).
+[code of conduct](https://github.com/pegasd/strings2markdown/blob/master/CODE_OF_CONDUCT.md).
