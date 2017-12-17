@@ -60,16 +60,63 @@ RSpec.describe Strings2markdown::StringsParser do
                              type: 'Integer',
                            },
                          ],
-            source:      <<~PUPPET.chomp
-              class klass (
-                Variant[Integer, Array[Integer, 1]] $param1,
-                $param2,
-                String $param3 = 'hi',
-                Integer $param4,
-              ) inherits foo::bar {
+            examples:
+                         [
+                           {
+                             name:   'Basic klass sample',
+                             source: "class { 'klass':\n  param1 => 5,\n  param2 => 'booyah',\n  param3 => 'hello',\n  param4 => 1,\n}",
+                           },
+                         ],
+            source:
+                         <<~PUPPET.chomp,
+                           class klass (
+                             Variant[Integer, Array[Integer, 1]] $param1,
+                             $param2,
+                             String $param3 = 'hi',
+                             Integer $param4,
+                           ) inherits foo::bar {
 
-              }
+                           }
           PUPPET
+            inherits: 'foo::bar',
+          },
+        ],
+      )
+    end
+  end
+
+  describe '#parse_defined_types' do
+    existing_module_parser = described_class.new('./spec/fixtures/test_module')
+    existing_module_parser.parse_module
+
+    it 'parses defined types correctly' do
+      expect(existing_module_parser.module_resources[:defined_types]).to eq(
+        [
+          {
+            name:        'dt',
+            private:     false,
+            description: 'A simple defined type.',
+            parameters:
+                         [
+                           {
+                             name:        'param1',
+                             type:        'Integer',
+                             description: 'First param.',
+                           },
+                           {
+                             name:        'param2',
+                             type:        'Any',
+                             description: 'Second param.',
+                           },
+                           {
+                             name:        'param3',
+                             type:        'String',
+                             default:     'hi',
+                             description: 'Third param.',
+                           },
+                         ],
+            examples:    [],
+            source:      'define dt(Integer $param1, $param2, String $param3 = hi) { }',
           },
         ],
       )

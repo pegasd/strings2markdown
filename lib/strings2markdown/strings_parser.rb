@@ -27,7 +27,7 @@ module Strings2markdown
       YARD::CLI::Yardoc.run(*args)
       @module_resources = {
         puppet_classes:   parse_puppet_classes(YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)),
-        defined_types:    YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash),
+        defined_types:    parse_defined_types(YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash)),
         resource_types:   YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
         providers:        YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash),
         puppet_functions: YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash),
@@ -39,18 +39,39 @@ module Strings2markdown
     def parse_puppet_classes(yard_puppet_classes)
       puppet_classes = []
       yard_puppet_classes.each do |yard_puppet_class|
-        docstring    = yard_puppet_class[:docstring]
-        puppet_class = {
+        docstring               = yard_puppet_class[:docstring]
+        puppet_class            = {
           name:        yard_puppet_class[:name].to_s,
           private:     check_if_private(docstring),
           description: docstring[:text],
           parameters:  parse_parameters(docstring, yard_puppet_class[:defaults]),
+          examples:    parse_examples(docstring),
           source:      yard_puppet_class[:source],
         }
+
+        puppet_class[:inherits] = yard_puppet_class[:inherits] if yard_puppet_class[:inherits]
 
         puppet_classes.push(puppet_class)
       end
       puppet_classes
+    end
+
+    def parse_defined_types(yard_defined_types)
+      defined_types = []
+      yard_defined_types.each do |yard_defined_type|
+        docstring    = yard_defined_type[:docstring]
+        defined_type = {
+          name:        yard_defined_type[:name].to_s,
+          private:     check_if_private(docstring),
+          description: docstring[:text],
+          parameters:  parse_parameters(docstring, yard_defined_type[:defaults]),
+          examples:    parse_examples(docstring),
+          source:      yard_defined_type[:source],
+        }
+
+        defined_types.push(defined_type)
+      end
+      defined_types
     end
 
     def check_if_private(docstring)
@@ -71,6 +92,18 @@ module Strings2markdown
         params.push(param)
       end
       params
+    end
+
+    def parse_examples(docstring)
+      yard_examples = docstring[:tags].select { |tag| tag[:tag_name].eql? 'example' }
+      examples      = []
+      yard_examples.each do |yard_example|
+        examples.push(
+          name:   yard_example[:name],
+          source: yard_example[:text],
+        )
+      end
+      examples
     end
 
     def self.parse_module(module_path: '.')
