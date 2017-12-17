@@ -3,27 +3,72 @@
 require 'spec_helper'
 
 RSpec.describe Strings2markdown::StringsParser do
-  it 'gets a hash from puppet-strings' do
+  describe '#parse_module' do
     existing_module_hash = described_class.parse_module(module_path: './spec/fixtures/test_module')
+    fake_module_hash     = described_class.parse_module(module_path: 'fake_module_name')
 
-    expect(existing_module_hash).to be_a(Hash)
+    it 'gets a hash from puppet-strings' do
+      expect(existing_module_hash).to be_a(Hash)
+    end
+
+    it 'gets a class and a function from test module' do
+      expect(existing_module_hash[:puppet_classes].first[:name]).to eq('klass')
+      expect(existing_module_hash[:puppet_functions].first[:name]).to eq(:func)
+    end
+
+    it 'returns a hash with empty arrays for a non-existant module' do
+      expect(fake_module_hash).to eq(
+        puppet_classes:   [],
+        defined_types:    [],
+        resource_types:   [],
+        providers:        [],
+        puppet_functions: [],
+      )
+    end
   end
 
-  it 'gets a class and a function from test module' do
-    existing_module_hash = described_class.parse_module(module_path: './spec/fixtures/test_module')
-    expect(existing_module_hash[:puppet_classes].first[:name]).to eq(:cron)
-    expect(existing_module_hash[:puppet_functions].first[:name]).to eq(:'cron::prep4cron')
-  end
+  describe '#parse_puppet_classes' do
+    existing_module_parser = described_class.new('./spec/fixtures/test_module')
+    existing_module_parser.parse_module
 
-  it 'returns a hash with empty arrays for a non-existant module' do
-    fake_module_hash = described_class.parse_module(module_path: 'fake_module_name')
+    it 'parses classes correctly' do
+      expect(existing_module_parser.module_resources[:puppet_classes]).to eq(
+        [
+          {
+            name:        'klass',
+            private:     false,
+            description: "A simple class.\n\nUse it to do stuff.",
+            parameters:
+                         [
+                           {
+                             name:        'param1',
+                             type:        'Variant[Integer, Array[Integer, 1]]',
+                             description: 'First param.',
+                           },
+                           {
+                             name:        'param2',
+                             type:        'Any',
+                             description: 'Second param.',
+                           },
+                           {
+                             name:        'param3',
+                             type:        'String',
+                             default:     "'hi'",
+                             description: 'Third param.',
+                           },
+                         ],
+            source:      <<~PUPPET.chomp
+              class klass (
+                Variant[Integer, Array[Integer, 1]] $param1,
+                $param2,
+                String $param3 = 'hi',
+              ) inherits foo::bar {
 
-    expect(fake_module_hash).to eq(
-      puppet_classes:   [],
-      defined_types:    [],
-      resource_types:   [],
-      providers:        [],
-      puppet_functions: [],
-    )
+              }
+          PUPPET
+          },
+        ],
+      )
+    end
   end
 end
