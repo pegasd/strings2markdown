@@ -1,8 +1,8 @@
-# Cron class
+# Manage cron on the host.
+#
+# @summary Main entry point.
 #
 # @see https://crontab.guru/
-#
-# @api private
 #
 # @example Declaring cron class
 #   include cron
