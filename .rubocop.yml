@@ -4,6 +4,10 @@ AllCops:
   Exclude:
     - spec/fixtures/**/*.rb
 
+# Layout
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
 # Style
 Style/TrailingCommaInArguments:
   Description: We're not living in JSON world anymore.
