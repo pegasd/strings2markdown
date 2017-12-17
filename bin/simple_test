@@ -11,5 +11,5 @@ def deep_symbol_to_string(whatever)
 end
 
 test_module_dir = File.expand_path('../../spec/fixtures/test_module', __FILE__)
-module_hash     = Strings2markdown.parse_module(module_path: test_module_dir)
+module_hash     = Strings2markdown::StringsParser.parse_module(module_path: test_module_dir)
 puts deep_symbol_to_string(module_hash).to_yaml
