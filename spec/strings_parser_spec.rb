@@ -58,7 +58,7 @@ RSpec.describe Strings2markdown::StringsParser do
                            {
                              name: 'param4',
                              type: 'Integer',
-                           }
+                           },
                          ],
             source:      <<~PUPPET.chomp
               class klass (

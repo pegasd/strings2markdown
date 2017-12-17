@@ -66,7 +66,7 @@ module Strings2markdown
         param[:name]        = yard_param[:name]
         param[:type]        = yard_param[:types][0]
         param[:default]     = defaults[param[:name]] if defaults.is_a?(Hash) && defaults.key?(param[:name])
-        param[:description] = yard_param[:text] if yard_param[:text] and !yard_param[:text].empty?
+        param[:description] = yard_param[:text] if yard_param[:text] && !yard_param[:text].empty?
 
         params.push(param)
       end

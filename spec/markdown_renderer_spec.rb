@@ -29,6 +29,6 @@ RSpec.describe Strings2markdown::MarkdownRenderer do
       * `param4`
         * Type: `Integer`
     MARKDOWN
-    )
+                                            )
   end
 end
