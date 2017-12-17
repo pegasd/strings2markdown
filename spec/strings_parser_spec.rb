@@ -51,17 +51,21 @@ RSpec.describe Strings2markdown::StringsParser do
                              description: 'Second param.',
                            },
                            {
-                             name:        'param3',
-                             type:        'String',
-                             default:     "'hi'",
-                             description: 'Third param.',
+                             name:    'param3',
+                             type:    'String',
+                             default: "'hi'",
                            },
+                           {
+                             name: 'param4',
+                             type: 'Integer',
+                           }
                          ],
             source:      <<~PUPPET.chomp
               class klass (
                 Variant[Integer, Array[Integer, 1]] $param1,
                 $param2,
                 String $param3 = 'hi',
+                Integer $param4,
               ) inherits foo::bar {
 
               }
