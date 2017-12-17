@@ -6,12 +6,7 @@
 ##### Parameters:
 
   <%- @puppet_class[:parameters].each do |class_parameter| -%>
-* `<%= class_parameter[:name] %>`<% if class_parameter[:description] %>: <%= class_parameter[:description] %><% end %>
-    <%- if class_parameter.key? :type -%>
-  * Type: `<%= class_parameter[:type] %>`
-    <%- end -%>
-    <%- if class_parameter.key? :default -%>
-  * Default value: **<%= class_parameter[:default] %>**
-    <%- end -%>
+    <%- @parameter = class_parameter -%>
+<%= render('lib/templates/internals/parameter.erb') -%>
   <%- end -%>
 <%- end -%>

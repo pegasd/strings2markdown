@@ -1,0 +1,7 @@
+* `<%= @parameter[:name] %>`<% if @parameter[:description] %>: <%= @parameter[:description] %><% end %>
+<%- if @parameter.key? :type -%>
+  * Type: `<%= @parameter[:type] %>`
+<%- end -%>
+<%- if @parameter.key? :default -%>
+  * Default value: **<%= @parameter[:default] %>**
+<%- end -%>

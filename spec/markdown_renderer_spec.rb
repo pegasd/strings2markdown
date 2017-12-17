@@ -10,25 +10,26 @@ RSpec.describe Strings2markdown::MarkdownRenderer do
   end
 
   it 'renders class documentation' do
-    expect(md_renderer.render_classes).to eq(<<~MARKDOWN
-      #### Class: `klass`
+    expect(md_renderer.render_classes).to eq(
+      <<~MARKDOWN
+        #### Class: `klass`
 
-      A simple class.
+        A simple class.
 
-      Use it to do stuff.
+        Use it to do stuff.
 
-      ##### Parameters:
+        ##### Parameters:
 
-      * `param1`: First param.
-        * Type: `Variant[Integer, Array[Integer, 1]]`
-      * `param2`: Second param.
-        * Type: `Any`
-      * `param3`
-        * Type: `String`
-        * Default value: **'hi'**
-      * `param4`
-        * Type: `Integer`
+        * `param1`: First param.
+          * Type: `Variant[Integer, Array[Integer, 1]]`
+        * `param2`: Second param.
+          * Type: `Any`
+        * `param3`
+          * Type: `String`
+          * Default value: **'hi'**
+        * `param4`
+          * Type: `Integer`
     MARKDOWN
-                                            )
+    )
   end
 end
