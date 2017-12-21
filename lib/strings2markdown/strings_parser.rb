@@ -75,13 +75,16 @@ module Strings2markdown
     end
 
     def check_if_private(docstring)
+      return false unless docstring[:tags]
+
       api = docstring[:tags].select { |tag| tag[:tag_name].eql? 'api' }
       api.any? && api[0][:text].eql?('private')
     end
 
     def parse_parameters(docstring, defaults)
+      params = []
+      return params unless docstring[:tags]
       yard_params = docstring[:tags].select { |tag| tag[:tag_name].eql? 'param' }
-      params      = []
       yard_params.each do |yard_param|
         param               = {}
         param[:name]        = yard_param[:name]
@@ -95,8 +98,9 @@ module Strings2markdown
     end
 
     def parse_examples(docstring)
+      examples = []
+      return examples unless docstring[:tags]
       yard_examples = docstring[:tags].select { |tag| tag[:tag_name].eql? 'example' }
-      examples      = []
       yard_examples.each do |yard_example|
         examples.push(
           name:   yard_example[:name],

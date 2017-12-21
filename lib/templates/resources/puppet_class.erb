@@ -1,8 +1,8 @@
 #### Class: `<%= @puppet_class[:name] %>`
 
 <%= @puppet_class[:description] %>
-
 <%- unless @puppet_class[:parameters].empty? -%>
+
 ##### Parameters:
 
   <%- @puppet_class[:parameters].each do |class_parameter| -%>
