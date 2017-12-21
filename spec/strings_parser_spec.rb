@@ -40,25 +40,8 @@ RSpec.describe Strings2markdown::StringsParser do
             description: "A simple class.\n\nUse it to do stuff.",
             parameters:
                          [
-                           {
-                             name:        'param1',
-                             type:        'Variant[Integer, Array[Integer, 1]]',
-                             description: 'First param.',
-                           },
-                           {
-                             name:        'param2',
-                             type:        'Any',
-                             description: 'Second param.',
-                           },
-                           {
-                             name:    'param3',
-                             type:    'String',
-                             default: "'hi'",
-                           },
-                           {
-                             name: 'param4',
-                             type: 'Integer',
-                           },
+                           { name: 'param1', type: 'Integer', description: 'First param.' },
+                           { name: 'param2', type: 'Any', description: 'Second param.' },
                          ],
             examples:
                          [
@@ -67,18 +50,28 @@ RSpec.describe Strings2markdown::StringsParser do
                              source: "class { 'klass':\n  param1 => 5,\n  param2 => 'booyah',\n  param3 => 'hello',\n  param4 => 1,\n}",
                            },
                          ],
-            source:
-                         <<~PUPPET.chomp,
-                           class klass (
-                             Variant[Integer, Array[Integer, 1]] $param1,
-                             $param2,
-                             String $param3 = 'hi',
-                             Integer $param4,
-                           ) inherits foo::bar {
-
-                           }
-          PUPPET
-            inherits: 'foo::bar',
+            source:      'class klass (Integer $param1, $param2) inherits foo::bar { }',
+            inherits:    'foo::bar',
+          },
+          {
+            name:        'klass_1',
+            private:     true,
+            description: "Yet another class called klass_1.\nUse it wisely. Or else!",
+            parameters:
+                         [
+                           { name: 'param3', type: 'String', default: "'hi'" },
+                           { name: 'param4', type: 'Integer' },
+                         ],
+            examples:    [],
+            source:      "class klass_1 (\n  String $param3 = 'hi',\n  Integer $param4,\n) {\n\n}",
+          },
+          {
+            name:        'klass_2',
+            private:     false,
+            description: 'Tiny class',
+            parameters:  [],
+            examples:    [],
+            source:      'class klass_2 {}',
           },
         ],
       )

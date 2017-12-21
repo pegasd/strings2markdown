@@ -18,14 +18,26 @@ RSpec.describe Strings2markdown::MarkdownRenderer do
         ##### Parameters:
 
         * `param1`: First param.
-          * Type: `Variant[Integer, Array[Integer, 1]]`
+          * Type: `Integer`
         * `param2`: Second param.
           * Type: `Any`
+
+        #### Class: `klass_1`
+
+        Yet another class called klass_1.
+        Use it wisely. Or else!
+
+        ##### Parameters:
+
         * `param3`
           * Type: `String`
           * Default value: **'hi'**
         * `param4`
           * Type: `Integer`
+
+        #### Class: `klass_2`
+
+        Tiny class
     MARKDOWN
     )
   end
