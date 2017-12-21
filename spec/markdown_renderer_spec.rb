@@ -6,8 +6,9 @@ RSpec.describe Strings2markdown::MarkdownRenderer do
   it 'gets initiated properly' do
     expect(md_renderer).to be_an_instance_of(described_class)
   end
+
   it 'renders class documentation' do
-    expect(md_renderer.render_classes).to eq(
+    expect(md_renderer.render_puppet_classes).to eq(
       <<~MARKDOWN
         #### Class: `klass`
 
@@ -38,6 +39,26 @@ RSpec.describe Strings2markdown::MarkdownRenderer do
         #### Class: `klass_2`
 
         Tiny class
+    MARKDOWN
+    )
+  end
+
+  it 'renders defined type documentation' do
+    expect(md_renderer.render_defined_types).to eq(
+      <<~MARKDOWN
+        #### Defined Type: `dt`
+
+        A simple defined type.
+
+        ##### Parameters:
+
+        * `param1`: First param.
+          * Type: `Integer`
+        * `param2`: Second param.
+          * Type: `Any`
+        * `param3`: Third param.
+          * Type: `String`
+          * Default value: **hi**
     MARKDOWN
     )
   end
