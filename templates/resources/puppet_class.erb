@@ -7,6 +7,6 @@
 
   <%- @puppet_class[:parameters].each do |class_parameter| -%>
     <%- @parameter = class_parameter -%>
-<%= render('lib/templates/internals/parameter.erb') -%>
+<%= render('templates/internals/parameter.erb') -%>
   <%- end -%>
 <%- end -%>

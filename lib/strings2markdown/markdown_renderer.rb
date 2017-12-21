@@ -19,7 +19,7 @@ module Strings2markdown
       classes    = @module_resources[:puppet_classes]
       classes.each do |puppet_class|
         @puppet_class   = puppet_class
-        puppet_class_md = render('lib/templates/resources/puppet_class.erb')
+        puppet_class_md = render('templates/resources/puppet_class.erb')
         md_classes.push(puppet_class_md)
       end
       md_classes.join("\n")
@@ -30,7 +30,7 @@ module Strings2markdown
       defined_types    = @module_resources[:defined_types]
       defined_types.each do |defined_type|
         @defined_type   = defined_type
-        defined_type_md = render('lib/templates/resources/defined_type.erb')
+        defined_type_md = render('templates/resources/defined_type.erb')
         md_defined_types.push(defined_type_md)
       end
       md_defined_types.join("\n")
