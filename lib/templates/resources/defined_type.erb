@@ -1,0 +1,12 @@
+#### Defined Type: `<%= @defined_type[:name] %>`
+
+<%= @defined_type[:description] %>
+
+<%- unless @defined_type[:parameters].empty? -%>
+##### Parameters:
+
+  <%- @defined_type[:parameters].each do |defined_type_parameter| -%>
+    <%- @parameter = defined_type_parameter -%>
+<%= render('lib/templates/internals/parameter.erb') -%>
+  <%- end -%>
+<%- end -%>
