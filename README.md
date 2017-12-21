@@ -1,5 +1,9 @@
 # Strings2markdown
 
+[![Gem Version](https://badge.fury.io/rb/strings2markdown.svg)](https://badge.fury.io/rb/strings2markdown)
+[![Build Status](https://travis-ci.org/pegasd/strings2markdown.svg?branch=master)](https://travis-ci.org/pegasd/strings2markdown)
+[![Coverage Status](https://coveralls.io/repos/github/pegasd/strings2markdown/badge.svg)](https://coveralls.io/github/pegasd/strings2markdown)
+
 This gem is intended to generate the `Reference` part of puppet module's README.md.
 
 ## Installation
