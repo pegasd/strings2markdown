@@ -6,6 +6,7 @@ AllCops:
 
 # Layout
 Layout/EmptyLinesAroundArguments:
+  Description: Got tired of fighting this guy.
   Enabled: false
 
 # Style
