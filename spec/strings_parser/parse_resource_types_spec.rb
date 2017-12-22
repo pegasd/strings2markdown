@@ -19,7 +19,7 @@ RSpec.describe Strings2markdown::StringsParser do
           private:     false,
           description: 'An example database server resource type.',
           examples:    [],
-        ]
+        ],
       )
     end
   end
