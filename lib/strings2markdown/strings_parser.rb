@@ -28,7 +28,7 @@ module Strings2markdown
       @module_resources = {
         puppet_classes:   parse_puppet_classes(YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)),
         defined_types:    parse_defined_types(YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash)),
-        resource_types:   YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
+        resource_types:   parse_resource_types(YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash)),
         providers:        YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash),
         puppet_functions: YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash),
       }
@@ -59,19 +59,32 @@ module Strings2markdown
     def parse_defined_types(yard_defined_types)
       defined_types = []
       yard_defined_types.each do |yard_defined_type|
-        docstring    = yard_defined_type[:docstring]
-        defined_type = {
+        docstring = yard_defined_type[:docstring]
+        defined_types.push(
           name:        yard_defined_type[:name].to_s,
           private:     check_if_private(docstring),
           description: docstring[:text],
           parameters:  parse_parameters(docstring, yard_defined_type[:defaults]),
           examples:    parse_examples(docstring),
           source:      yard_defined_type[:source],
-        }
-
-        defined_types.push(defined_type)
+        )
       end
       defined_types
+    end
+
+    def parse_resource_types(yard_resource_types)
+      resource_types = []
+      yard_resource_types.each do |yard_resource_type|
+        docstring = yard_resource_type[:docstring]
+        resource_types.push(
+          name:        yard_resource_type[:name].to_s,
+          private:     check_if_private(docstring),
+          description: docstring[:text],
+          examples:    parse_examples(docstring),
+        )
+      end
+
+      resource_types
     end
 
     def check_if_private(docstring)
@@ -84,6 +97,7 @@ module Strings2markdown
     def parse_parameters(docstring, defaults)
       params = []
       return params unless docstring[:tags]
+
       yard_params = docstring[:tags].select { |tag| tag[:tag_name].eql? 'param' }
       yard_params.each do |yard_param|
         param               = {}
@@ -100,6 +114,7 @@ module Strings2markdown
     def parse_examples(docstring)
       examples = []
       return examples unless docstring[:tags]
+
       yard_examples = docstring[:tags].select { |tag| tag[:tag_name].eql? 'example' }
       yard_examples.each do |yard_example|
         examples.push(
