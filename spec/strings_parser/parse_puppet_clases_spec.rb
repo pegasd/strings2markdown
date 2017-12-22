@@ -6,9 +6,14 @@ RSpec.describe Strings2markdown::StringsParser do
   describe '#parse_puppet_classes' do
     existing_module_parser = described_class.new('./spec/fixtures/test_module')
     existing_module_parser.parse_module
+    puppet_classes = existing_module_parser.module_resources[:puppet_classes]
+
+    it 'contains an array of puppet classes' do
+      expect(puppet_classes).to be_a(Array)
+    end
 
     it 'parses classes correctly' do
-      expect(existing_module_parser.module_resources[:puppet_classes]).to eq(
+      expect(puppet_classes).to eq(
         [
           {
             name:        'klass',

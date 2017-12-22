@@ -6,9 +6,14 @@ RSpec.describe Strings2markdown::StringsParser do
   describe '#parse_defined_types' do
     existing_module_parser = described_class.new('./spec/fixtures/test_module')
     existing_module_parser.parse_module
+    defined_types = existing_module_parser.module_resources[:defined_types]
+
+    it 'contains an array of defined types' do
+      expect(defined_types).to be_a(Array)
+    end
 
     it 'parses defined types correctly' do
-      expect(existing_module_parser.module_resources[:defined_types]).to eq(
+      expect(defined_types).to eq(
         [
           {
             name:        'dt',
